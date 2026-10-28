@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AdGuard: Блокировщик рекламы — preview</title>
+<style>
+  :root { --accent:#67c28e; --ink:#cfe8d5; }
+  html, body { margin: 0; background: #000; color: var(--ink);
+               font: 13px/1.4 ui-monospace, Menlo, monospace; }
+  body { display: flex; flex-direction: column; min-height: 100vh; }
+
+  header { display: flex; align-items: center; gap: 12px; padding: 14px 20px 8px; }
+  header img { width: 38px; height: 38px; border-radius: 9px; display: block;
+               border: 1px solid #2e4438; }
+  header .name { font-size: 15px; font-weight: 700; letter-spacing: .2px; }
+  header .sub { opacity: .55; font-size: 12px; }
+
+  #stage { flex: 1; display: flex; align-items: center; justify-content: center;
+           min-height: 0; padding: 10px 16px; }
+  #stage video { max-width: min(96vw, 1280px); max-height: calc(100vh - 260px);
+                 width: auto; height: auto; display: block; background: #000;
+                 border-radius: 14px; cursor: pointer;
+                 box-shadow: 0 0 60px rgba(103,194,142,.14), 0 30px 80px rgba(0,0,0,.65); }
+
+  #bar { height: 64px; flex: 0 0 auto; display: flex; gap: 14px; align-items: center;
+         padding: 0 18px; background: #101315; }
+  button { background: #1d2b24; color: var(--ink); border: 1px solid #2e4438;
+           border-radius: 8px; padding: 8px 16px; font: 600 13px ui-monospace, Menlo, monospace;
+           cursor: pointer; white-space: nowrap; }
+  button:hover { background: #27402f; }
+  #time { min-width: 150px; text-align: right; }
+  input[type=range] { flex: 1; accent-color: var(--accent); }
+  .hint { opacity: .55; }
+
+  section.shots { padding: 26px 20px 6px; }
+  .row { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
+  .row img { height: 340px; width: auto; border-radius: 16px; border: 1px solid #2e4438;
+             display: block; transition: transform .15s ease, border-color .15s ease; }
+  .row img:hover { transform: translateY(-4px); border-color: var(--accent); }
+
+  section.actions { display: flex; gap: 14px; justify-content: center; align-items: center;
+                    padding: 26px 20px 34px; flex-wrap: wrap; }
+  a.btn { display: inline-flex; align-items: center; gap: 9px; text-decoration: none;
+          border-radius: 10px; padding: 11px 22px; font: 600 14px ui-monospace, Menlo, monospace; }
+  a.store { background: #f2f2f7; color: #0b0b0f; }
+  a.store:hover { background: #fff; }
+  a.store svg { width: 16px; height: 16px; fill: currentColor; }
+  a.web { background: #1d2b24; color: var(--ink); border: 1px solid #2e4438; }
+  a.web:hover { background: #27402f; }
+
+  footer { padding: 0 20px 26px; text-align: center; opacity: .45; font-size: 12px; }
+</style>
+</head>
+<body>
+
+<header>
+  <img src="assets/icon.png" alt="Иконка AdGuard">
+  <div>
+    <div class="name">AdGuard: Блокировщик рекламы</div>
+    <div class="sub">preview loop</div>
+  </div>
+</header>
+
+<div id="stage">
+  <video id="v" src="assets/loop.mp4" autoplay muted loop playsinline></video>
+</div>
+
+<div id="bar">
+  <button id="play">⏸ Pause</button>
+  <input id="scrub" type="range" min="0" max="18.5" step="0.01" value="0">
+  <span id="time">0.00 s</span>
+  <span class="hint">space — play/pause, ←/→ — кадры, ?t=сек — стоп-кадр</span>
+</div>
+
+<section class="shots">
+  <div class="row">
+    <img src="assets/shot1.png" alt="Скриншот 1">
+    <img src="assets/shot2.png" alt="Скриншот 2">
+    <img src="assets/shot3.png" alt="Скриншот 3">
+    <img src="assets/shot4.png" alt="Скриншот 4">
+  </div>
+</section>
+
+<section class="actions">
+  <a class="btn store" href="https://apps.apple.com/ru/app/id1047223162" target="_blank" rel="noopener">
+    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12.152 6.896c-.948 0-2.415-1.078-3.96-1.04-2.04.027-3.91 1.183-4.961 3.014-2.117 3.675-.546 9.103 1.519 12.09 1.013 1.454 2.208 3.09 3.792 3.039 1.52-.065 2.09-.987 3.935-.987 1.831 0 2.35.987 3.96.948 1.637-.026 2.676-1.48 3.676-2.948 1.156-1.688 1.636-3.325 1.662-3.415-.039-.013-3.182-1.221-3.22-4.857-.026-3.04 2.48-4.494 2.597-4.559-1.429-2.09-3.623-2.324-4.39-2.376-2-.156-3.675 1.09-4.61 1.09zM15.53 3.83c.843-1.012 1.4-2.427 1.245-3.83-1.207.052-2.662.805-3.532 1.818-.78.896-1.454 2.338-1.273 3.714 1.338.104 2.715-.688 3.559-1.702"/></svg>
+    App Store
+  </a>
+  <a class="btn web" href="https://adguard.com" target="_blank" rel="noopener">adguard.com</a>
+</section>
+
+<footer>App Store screenshots © AdGuard — used for preview only</footer>
+
+<script>
+const v = document.getElementById('v');
+const playBtn = document.getElementById('play');
+const scrub = document.getElementById('scrub');
+const timeEl = document.getElementById('time');
+let dragging = false;
+
+const fmt = t => (isFinite(t) ? t : 0).toFixed(2) + ' s';
+
+function label() { playBtn.textContent = v.paused ? '▶ Play' : '⏸ Pause'; }
+v.addEventListener('play', label);
+v.addEventListener('pause', label);
+
+v.addEventListener('loadedmetadata', () => { scrub.max = v.duration; });
+v.addEventListener('click', () => v.paused ? v.play() : v.pause());
+playBtn.onclick = () => v.paused ? v.play() : v.pause();
+
+scrub.addEventListener('input', () => {
+  dragging = true;
+  v.currentTime = parseFloat(scrub.value);
+  timeEl.textContent = fmt(v.currentTime) + ' / ' + fmt(v.duration);
+});
+scrub.addEventListener('change', () => { dragging = false; });
+
+setInterval(() => {
+  if (!dragging) {
+    scrub.value = v.currentTime;
+    timeEl.textContent = fmt(v.currentTime) + ' / ' + fmt(v.duration);
+  }
+}, 80);
+
+document.addEventListener('keydown', e => {
+  if (e.code === 'Space') { e.preventDefault(); v.paused ? v.play() : v.pause(); }
+  if (e.code === 'ArrowRight') { v.pause(); v.currentTime = Math.min(v.duration, v.currentTime + 0.05); }
+  if (e.code === 'ArrowLeft')  { v.pause(); v.currentTime = Math.max(0, v.currentTime - 0.05); }
+});
+
+const qt = new URLSearchParams(location.search).get('t');
+if (qt !== null) {
+  v.addEventListener('loadedmetadata', () => {
+    v.pause();
+    v.currentTime = Math.min(parseFloat(qt) || 0, v.duration);
+  }, { once: true });
+}
+label();
+</script>
+</body>
+</html>
