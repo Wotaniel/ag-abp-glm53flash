@@ -3,140 +3,294 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>AdGuard: Блокировщик рекламы — preview</title>
+<title>AdGuard: Блокировщик рекламы — превью анимации</title>
+<meta name="description" content="Превью анимации App Store для AdGuard: Блокировщик рекламы — зацикленный ролик, скриншоты, ссылки.">
 <style>
-  :root { --accent:#67c28e; --ink:#cfe8d5; }
-  html, body { margin: 0; background: #000; color: var(--ink);
-               font: 13px/1.4 ui-monospace, Menlo, monospace; }
-  body { display: flex; flex-direction: column; min-height: 100vh; }
+  :root{
+    --bg:#05070a;
+    --panel:#0d1117;
+    --line:#1d2733;
+    --txt:#e8ecf2;
+    --dim:#8b94a3;
+    --green:#68bc51;
+    --green-btn:#1d2b24;
+    --green-line:#2e4438;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0}
+  body{
+    background:var(--bg);
+    color:var(--txt);
+    font:15px/1.5 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    -webkit-font-smoothing:antialiased;
+  }
+  a{color:inherit}
 
-  header { display: flex; align-items: center; gap: 12px; padding: 14px 20px 8px; }
-  header img { width: 38px; height: 38px; border-radius: 9px; display: block;
-               border: 1px solid #2e4438; }
-  header .name { font-size: 15px; font-weight: 700; letter-spacing: .2px; }
-  header .sub { opacity: .55; font-size: 12px; }
+  /* ---------- hero (fills first screen) ---------- */
+  .hero{
+    min-height:100vh;
+    min-height:100svh;
+    display:flex;
+    flex-direction:column;
+    background:radial-gradient(1200px 700px at 50% -10%, #12200f 0%, var(--bg) 60%);
+  }
+  header{
+    display:flex;
+    align-items:center;
+    gap:14px;
+    padding:16px 24px;
+    border-bottom:1px solid var(--line);
+  }
+  header .icon{
+    width:42px;height:42px;
+    border-radius:10px;
+    display:block;
+    box-shadow:0 2px 10px rgba(0,0,0,.5);
+  }
+  .titles{flex:1;min-width:0}
+  .titles h1{margin:0;font-size:16px;font-weight:600;letter-spacing:.1px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .titles p{margin:1px 0 0;font-size:12px;color:var(--dim)}
+  .cta{display:flex;gap:10px;flex-shrink:0}
+  .btn{
+    display:inline-flex;align-items:center;gap:8px;
+    padding:9px 16px;border-radius:10px;
+    font-size:13px;font-weight:600;text-decoration:none;
+    border:1px solid transparent;cursor:pointer;
+    transition:transform .12s ease, background .12s ease, border-color .12s ease;
+    white-space:nowrap;
+  }
+  .btn:active{transform:scale(.97)}
+  .btn.primary{background:var(--green);color:#071307}
+  .btn.primary:hover{background:#79cf62}
+  .btn.primary svg{width:15px;height:15px;fill:currentColor}
+  .btn.ghost{background:#12161f;border-color:var(--line);color:var(--txt)}
+  .btn.ghost:hover{border-color:#33415a;background:#171d29}
 
-  #stage { flex: 1; display: flex; align-items: center; justify-content: center;
-           min-height: 0; padding: 10px 16px; }
-  #stage video { max-width: min(96vw, 1280px); max-height: calc(100vh - 260px);
-                 width: auto; height: auto; display: block; background: #000;
-                 border-radius: 14px; cursor: pointer;
-                 box-shadow: 0 0 60px rgba(103,194,142,.14), 0 30px 80px rgba(0,0,0,.65); }
+  /* ---------- stage ---------- */
+  #stage{
+    flex:1;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    min-height:0;
+    padding:22px 16px 10px;
+    position:relative;
+  }
+  .video-wrap{position:relative;max-width:min(94vw,1180px)}
+  video{
+    display:block;
+    width:100%;
+    max-height:calc(100vh - 300px);
+    min-height:200px;
+    border-radius:12px;
+    border:1px solid var(--line);
+    box-shadow:0 24px 80px rgba(0,0,0,.6), 0 4px 18px rgba(0,0,0,.5);
+    background:#000;
+    cursor:pointer;
+  }
+  #overlay{
+    position:absolute;inset:0;
+    display:flex;align-items:center;justify-content:center;
+    cursor:pointer;border-radius:12px;
+    background:rgba(0,0,0,.35);
+  }
+  #overlay[hidden]{display:none}
+  #overlay .disc{
+    width:72px;height:72px;border-radius:50%;
+    background:rgba(13,17,23,.85);
+    border:1px solid var(--green-line);
+    display:flex;align-items:center;justify-content:center;
+    box-shadow:0 8px 30px rgba(0,0,0,.6);
+  }
+  #overlay .disc svg{width:26px;height:26px;fill:var(--green);margin-left:4px}
 
-  #bar { height: 64px; flex: 0 0 auto; display: flex; gap: 14px; align-items: center;
-         padding: 0 18px; background: #101315; }
-  button { background: #1d2b24; color: var(--ink); border: 1px solid #2e4438;
-           border-radius: 8px; padding: 8px 16px; font: 600 13px ui-monospace, Menlo, monospace;
-           cursor: pointer; white-space: nowrap; }
-  button:hover { background: #27402f; }
-  #time { min-width: 150px; text-align: right; }
-  input[type=range] { flex: 1; accent-color: var(--accent); }
-  .hint { opacity: .55; }
+  /* ---------- control bar (по мотивам tengu-preview) ---------- */
+  #bar{
+    height:60px;
+    display:flex;gap:14px;align-items:center;
+    padding:0 18px;
+    margin:14px 16px 18px;
+    background:var(--panel);
+    border:1px solid var(--line);
+    border-radius:12px;
+    color:#cfe8d5;
+    font:12.5px/1 ui-monospace, Menlo, monospace;
+  }
+  #bar button{
+    background:var(--green-btn);
+    color:#cfe8d5;
+    border:1px solid var(--green-line);
+    border-radius:8px;
+    width:38px;height:34px;
+    display:flex;align-items:center;justify-content:center;
+    cursor:pointer;flex-shrink:0;
+  }
+  #bar button:hover{background:#27402f}
+  #bar button svg{width:14px;height:14px;fill:currentColor}
+  #bar .ico-pause{display:none}
+  #bar.playing .ico-pause{display:block}
+  #bar.playing .ico-play{display:none}
+  #time{min-width:104px;text-align:right;color:var(--dim)}
+  input[type=range]{flex:1;accent-color:var(--green);height:4px;cursor:pointer}
+  .hint{color:var(--dim);white-space:nowrap}
+  @media (max-width:640px){ .hint{display:none} #time{min-width:80px} }
 
-  section.shots { padding: 26px 20px 6px; }
-  .row { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
-  .row img { height: 340px; width: auto; border-radius: 16px; border: 1px solid #2e4438;
-             display: block; transition: transform .15s ease, border-color .15s ease; }
-  .row img:hover { transform: translateY(-4px); border-color: var(--accent); }
+  /* ---------- screenshots ---------- */
+  .shots{padding:34px 24px 70px;border-top:1px solid var(--line)}
+  .shots h2{margin:0 0 4px;font-size:18px;font-weight:600}
+  .shots .sub{margin:0 0 22px;font-size:13px;color:var(--dim)}
+  .row{
+    display:flex;gap:18px;
+    overflow-x:auto;
+    padding:6px 2px 18px;
+    scroll-snap-type:x mandatory;
+  }
+  .row a{
+    flex:0 0 auto;
+    scroll-snap-align:start;
+    border-radius:16px;
+    transition:transform .15s ease, box-shadow .15s ease;
+  }
+  .row a:hover{
+    transform:translateY(-4px);
+    box-shadow:0 14px 40px rgba(0,0,0,.55);
+  }
+  .row img{
+    display:block;
+    width:min(240px, 62vw);
+    border-radius:16px;
+    border:1px solid var(--line);
+  }
 
-  section.actions { display: flex; gap: 14px; justify-content: center; align-items: center;
-                    padding: 26px 20px 34px; flex-wrap: wrap; }
-  a.btn { display: inline-flex; align-items: center; gap: 9px; text-decoration: none;
-          border-radius: 10px; padding: 11px 22px; font: 600 14px ui-monospace, Menlo, monospace; }
-  a.store { background: #f2f2f7; color: #0b0b0f; }
-  a.store:hover { background: #fff; }
-  a.store svg { width: 16px; height: 16px; fill: currentColor; }
-  a.web { background: #1d2b24; color: var(--ink); border: 1px solid #2e4438; }
-  a.web:hover { background: #27402f; }
-
-  footer { padding: 0 20px 26px; text-align: center; opacity: .45; font-size: 12px; }
+  footer{
+    padding:0 24px 40px;
+    text-align:center;
+    color:var(--dim);
+    font-size:12px;
+  }
+  footer a{color:var(--dim)}
 </style>
 </head>
 <body>
 
-<header>
-  <img src="assets/icon.png" alt="Иконка AdGuard">
-  <div>
-    <div class="name">AdGuard: Блокировщик рекламы</div>
-    <div class="sub">preview loop</div>
+<div class="hero">
+  <header>
+    <img class="icon" src="assets/icon.png" alt="Иконка AdGuard: Блокировщик рекламы">
+    <div class="titles">
+      <h1>AdGuard: Блокировщик рекламы</h1>
+      <p>Превью анимации · App Store</p>
+    </div>
+    <div class="cta">
+      <a class="btn primary" href="https://apps.apple.com/ru/app/id1047223162" target="_blank" rel="noopener">
+        <svg viewBox="0 0 384 512" aria-hidden="true"><path d="M318.7 268.7c-.2-36.7 16.4-64.4 50-84.8-18.8-26.9-47.2-41.7-84.7-44.6-35.5-2.8-74.3 20.7-88.5 20.7-15 0-49.4-19.7-76.4-19.7C63.3 141.2 4 184.8 4 273.5q0 39.3 14.4 81.2c12.8 36.7 59 126.7 107.2 125.2 25.2-.6 43-17.9 75.8-17.9 31.8 0 48.3 17.9 76.4 17.9 48.6-.7 90.4-82.5 102.6-119.3-65.2-30.7-61.7-90-61.7-91.9zm-56.6-164.2c27.3-32.4 24.8-61.9 24-72.5-24.1 1.4-52 16.4-67.9 34.9-17.5 19.8-27.8 44.3-25.6 71.9 26.1 2 49.9-11.4 69.5-34.3z"/></svg>
+        App Store
+      </a>
+      <a class="btn ghost" href="https://adguard.com" target="_blank" rel="noopener">adguard.com</a>
+    </div>
+  </header>
+
+  <div id="stage">
+    <div class="video-wrap">
+      <video id="loop" src="assets/loop.mp4" autoplay muted loop playsinline webkit-playsinline preload="auto"></video>
+      <div id="overlay" hidden>
+        <div class="disc">
+          <svg viewBox="0 0 384 512" aria-hidden="true"><path d="M73 39c-14.8-9.1-33.4-9.4-48.5-.9S0 62.6 0 80V432c0 17.4 9.4 33.4 24.5 41.9s33.7 8.1 48.5-.9L361 297c14.3-8.7 23-24.2 23-41s-8.7-32.2-23-41L73 39z"/></svg>
+        </div>
+      </div>
+    </div>
   </div>
-</header>
 
-<div id="stage">
-  <video id="v" src="assets/loop.mp4" autoplay muted loop playsinline></video>
-</div>
-
-<div id="bar">
-  <button id="play">⏸ Pause</button>
-  <input id="scrub" type="range" min="0" max="18.5" step="0.01" value="0">
-  <span id="time">0.00 s</span>
-  <span class="hint">space — play/pause, ←/→ — кадры, ?t=сек — стоп-кадр</span>
+  <div id="bar">
+    <button id="playpause" aria-label="Играть / пауза">
+      <svg class="ico-play" viewBox="0 0 384 512" aria-hidden="true"><path d="M73 39c-14.8-9.1-33.4-9.4-48.5-.9S0 62.6 0 80V432c0 17.4 9.4 33.4 24.5 41.9s33.7 8.1 48.5-.9L361 297c14.3-8.7 23-24.2 23-41s-8.7-32.2-23-41L73 39z"/></svg>
+      <svg class="ico-pause" viewBox="0 0 320 512" aria-hidden="true"><path d="M48 64C21.5 64 0 85.5 0 112V400c0 26.5 21.5 48 48 48H80c26.5 0 48-21.5 48-48V112c0-26.5-21.5-48-48-48H48zm192 0c-26.5 0-48 21.5-48 48V400c0 26.5 21.5 48 48 48h32c26.5 0 48-21.5 48-48V112c0-26.5-21.5-48-48-48H240z"/></svg>
+    </button>
+    <input id="seek" type="range" min="0" max="0" step="0.01" value="0" aria-label="Позиция в ролике">
+    <span id="time">0:00 / 0:00</span>
+    <span class="hint">луп · без звука</span>
+  </div>
 </div>
 
 <section class="shots">
+  <h2>Скриншоты из App Store</h2>
+  <p class="sub">Нажмите на скриншот, чтобы открыть в полном размере</p>
   <div class="row">
-    <img src="assets/shot1.png" alt="Скриншот 1">
-    <img src="assets/shot2.png" alt="Скриншот 2">
-    <img src="assets/shot3.png" alt="Скриншот 3">
-    <img src="assets/shot4.png" alt="Скриншот 4">
+    <a href="assets/shot1.png" target="_blank" rel="noopener" aria-label="Открыть скриншот 1"><img src="assets/shot1.png" alt="Скриншот 1 — блокировка рекламы" loading="lazy"></a>
+    <a href="assets/shot2.png" target="_blank" rel="noopener" aria-label="Открыть скриншот 2"><img src="assets/shot2.png" alt="Скриншот 2 — защита от трекинга" loading="lazy"></a>
+    <a href="assets/shot3.png" target="_blank" rel="noopener" aria-label="Открыть скриншот 3"><img src="assets/shot3.png" alt="Скриншот 3 — статистика блокировок" loading="lazy"></a>
+    <a href="assets/shot4.png" target="_blank" rel="noopener" aria-label="Открыть скриншот 4"><img src="assets/shot4.png" alt="Скриншот 4 — свои фильтры" loading="lazy"></a>
   </div>
 </section>
 
-<section class="actions">
-  <a class="btn store" href="https://apps.apple.com/ru/app/id1047223162" target="_blank" rel="noopener">
-    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12.152 6.896c-.948 0-2.415-1.078-3.96-1.04-2.04.027-3.91 1.183-4.961 3.014-2.117 3.675-.546 9.103 1.519 12.09 1.013 1.454 2.208 3.09 3.792 3.039 1.52-.065 2.09-.987 3.935-.987 1.831 0 2.35.987 3.96.948 1.637-.026 2.676-1.48 3.676-2.948 1.156-1.688 1.636-3.325 1.662-3.415-.039-.013-3.182-1.221-3.22-4.857-.026-3.04 2.48-4.494 2.597-4.559-1.429-2.09-3.623-2.324-4.39-2.376-2-.156-3.675 1.09-4.61 1.09zM15.53 3.83c.843-1.012 1.4-2.427 1.245-3.83-1.207.052-2.662.805-3.532 1.818-.78.896-1.454 2.338-1.273 3.714 1.338.104 2.715-.688 3.559-1.702"/></svg>
-    App Store
-  </a>
-  <a class="btn web" href="https://adguard.com" target="_blank" rel="noopener">adguard.com</a>
-</section>
-
-<footer>App Store screenshots © AdGuard — used for preview only</footer>
+<footer>
+  Зацикленный ролик · 1920×824 · без звука ·
+  <a href="https://apps.apple.com/ru/app/id1047223162" target="_blank" rel="noopener">App Store</a> ·
+  <a href="https://adguard.com" target="_blank" rel="noopener">adguard.com</a>
+</footer>
 
 <script>
-const v = document.getElementById('v');
-const playBtn = document.getElementById('play');
-const scrub = document.getElementById('scrub');
-const timeEl = document.getElementById('time');
-let dragging = false;
+(function(){
+  var v = document.getElementById('loop');
+  var bar = document.getElementById('bar');
+  var btn = document.getElementById('playpause');
+  var seek = document.getElementById('seek');
+  var timeEl = document.getElementById('time');
+  var overlay = document.getElementById('overlay');
+  var scrubbing = false;
 
-const fmt = t => (isFinite(t) ? t : 0).toFixed(2) + ' s';
+  v.muted = true;
 
-function label() { playBtn.textContent = v.paused ? '▶ Play' : '⏸ Pause'; }
-v.addEventListener('play', label);
-v.addEventListener('pause', label);
-
-v.addEventListener('loadedmetadata', () => { scrub.max = v.duration; });
-v.addEventListener('click', () => v.paused ? v.play() : v.pause());
-playBtn.onclick = () => v.paused ? v.play() : v.pause();
-
-scrub.addEventListener('input', () => {
-  dragging = true;
-  v.currentTime = parseFloat(scrub.value);
-  timeEl.textContent = fmt(v.currentTime) + ' / ' + fmt(v.duration);
-});
-scrub.addEventListener('change', () => { dragging = false; });
-
-setInterval(() => {
-  if (!dragging) {
-    scrub.value = v.currentTime;
+  function fmt(s){
+    s = Math.max(0, Math.floor(s || 0));
+    return Math.floor(s/60) + ':' + String(s%60).padStart(2,'0');
+  }
+  function sync(){
+    if(!scrubbing && v.duration) seek.value = v.currentTime;
     timeEl.textContent = fmt(v.currentTime) + ' / ' + fmt(v.duration);
   }
-}, 80);
+  function toggle(){
+    if(v.paused) v.play(); else v.pause();
+  }
 
-document.addEventListener('keydown', e => {
-  if (e.code === 'Space') { e.preventDefault(); v.paused ? v.play() : v.pause(); }
-  if (e.code === 'ArrowRight') { v.pause(); v.currentTime = Math.min(v.duration, v.currentTime + 0.05); }
-  if (e.code === 'ArrowLeft')  { v.pause(); v.currentTime = Math.max(0, v.currentTime - 0.05); }
-});
+  v.addEventListener('loadedmetadata', function(){
+    seek.max = v.duration || 0;
+    sync();
+  });
+  v.addEventListener('play', function(){
+    bar.classList.add('playing');
+    overlay.hidden = true;
+  });
+  v.addEventListener('pause', function(){
+    bar.classList.remove('playing');
+  });
+  v.addEventListener('timeupdate', sync);
 
-const qt = new URLSearchParams(location.search).get('t');
-if (qt !== null) {
-  v.addEventListener('loadedmetadata', () => {
-    v.pause();
-    v.currentTime = Math.min(parseFloat(qt) || 0, v.duration);
-  }, { once: true });
-}
-label();
+  // плавная синхронизация скраба
+  (function tick(){ sync(); requestAnimationFrame(tick); })();
+
+  // автоплей мог быть заблокирован — покажем большую кнопку
+  var p = v.play();
+  if(p && p.catch) p.catch(function(){ overlay.hidden = false; });
+
+  btn.addEventListener('click', toggle);
+  v.addEventListener('click', toggle);
+  overlay.addEventListener('click', function(){ v.play(); });
+
+  seek.addEventListener('pointerdown', function(){ scrubbing = true; });
+  window.addEventListener('pointerup', function(){ scrubbing = false; });
+  seek.addEventListener('input', function(){
+    if(v.duration) v.currentTime = parseFloat(seek.value);
+  });
+
+  document.addEventListener('keydown', function(e){
+    var t = e.target.tagName;
+    if(e.code === 'Space' && t !== 'INPUT' && t !== 'BUTTON' && t !== 'A'){
+      e.preventDefault();
+      toggle();
+    }
+  });
+})();
 </script>
+
 </body>
 </html>
